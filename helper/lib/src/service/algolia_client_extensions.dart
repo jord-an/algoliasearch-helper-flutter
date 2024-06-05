@@ -55,6 +55,7 @@ extension AlgolisSearchStateExt on SearchState {
       aroundRadius: aroundRadius,
       minimumAroundRadius: minimumAroundRadius,
       insideBoundingBox: insideBoundingBox,
+      getRankingInfo: getRankingInfo,
     );
     return search;
   }
@@ -95,6 +96,7 @@ extension AlgolisFacetSearchStateExt on FacetSearchState {
       userToken: searchState.userToken,
       filters: filters,
       clickAnalytics: searchState.clickAnalytics,
+      getRankingInfo: searchState.getRankingInfo,
     );
     return search;
   }

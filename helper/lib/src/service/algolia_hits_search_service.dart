@@ -76,6 +76,21 @@ class AlgoliaHitsSearchService implements HitsSearchService {
       final unfoldedResponses = responses.results
           .map((result) {
             if (result is Map<String, dynamic>) {
+              /**
+               * This is an ugly workaround to force include a promoted attribute into each returned hit.
+               * This appears necessary because the algoliasearch-client-dart requires a promoted attribute which isn't returned from the API.
+               * The permanent fix would be to alter the algoliasearch-client-dart package to allow a Null promoted attribute.
+               */
+              List<dynamic> alteredHits = [];
+              if (result.containsKey("hits")){
+                for(Map<String, dynamic> hit in result['hits'] as List<dynamic>){
+                  if (hit.containsKey("_rankingInfo")){
+                    (hit['_rankingInfo'] as Map<String, dynamic>).putIfAbsent("promoted", () => false);
+                  }
+                  alteredHits.add(hit);
+                }
+              }
+              result['hits'] = alteredHits;
               return algolia.SearchResponse.fromJson(result).toSearchResponse();
             }
           })

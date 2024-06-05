@@ -46,6 +46,7 @@ class SearchState implements MultiSearchState {
     this.minimumAroundRadius,
     this.aroundPrecision,
     this.insideBoundingBox,
+    this.getRankingInfo,
   });
 
   /// Index name
@@ -324,6 +325,12 @@ class SearchState implements MultiSearchState {
   ///
   final List<List<double>>? insideBoundingBox;
 
+  ///
+  /// **GetRankingInfo**
+  ///
+  /// Get detailed ranking information back from API
+  final bool? getRankingInfo;
+
   /// Make a copy of the search state.
   SearchState copyWith({
     List<String>? attributesToHighlight,
@@ -356,6 +363,7 @@ class SearchState implements MultiSearchState {
     int? aroundPrecision,
     int? minimumAroundRadius,
     List<List<double>>? insideBoundingBox,
+    bool? getRankingInfo,
   }) =>
       SearchState(
         attributesToHighlight:
@@ -390,6 +398,7 @@ class SearchState implements MultiSearchState {
         aroundPrecision: aroundPrecision ?? this.aroundPrecision,
         minimumAroundRadius: minimumAroundRadius ?? this.minimumAroundRadius,
         insideBoundingBox: insideBoundingBox ?? this.insideBoundingBox,
+        getRankingInfo: getRankingInfo ?? this.getRankingInfo,
       );
 
   @override
@@ -427,7 +436,8 @@ class SearchState implements MultiSearchState {
           aroundRadius == other.aroundRadius &&
           aroundPrecision == other.aroundPrecision &&
           minimumAroundRadius == other.minimumAroundRadius &&
-          insideBoundingBox.equals(other.insideBoundingBox);
+          insideBoundingBox.equals(other.insideBoundingBox) &&
+          getRankingInfo == getRankingInfo;
 
   @override
   int get hashCode =>
@@ -460,7 +470,8 @@ class SearchState implements MultiSearchState {
       aroundRadius.hashCode ^
       aroundPrecision.hashCode ^
       minimumAroundRadius.hashCode ^
-      insideBoundingBox.hashing();
+      insideBoundingBox.hashing() ^
+      getRankingInfo.hashCode;
 
   @override
   String toString() => 'SearchState{'
@@ -493,5 +504,6 @@ class SearchState implements MultiSearchState {
       'aroundRadius: $aroundRadius, '
       'aroundPrecision: $aroundPrecision, '
       'minimumAroundRadius: $minimumAroundRadius, '
-      'insideBoundingBox: $insideBoundingBox}';
+      'insideBoundingBox: $insideBoundingBox, '
+      'getRankingInfo: $getRankingInfo }';
 }
